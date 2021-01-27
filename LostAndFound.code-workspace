@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"name": "LostAndFound",
+			"path": "."
+		},
+		{
+			"name": "UE4",
+			"path": "C:\\Program Files\\Epic Games\\UE_4.26"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"C_Cpp.default.forcedInclude": [
+			"D:\\Projects\\Lost-and-Found\\Intermediate\\Build\\Win64\\UE4Editor\\Development\\LostAndFound\\Definitions.LostAndFound.h",
+			"D:\\Projects\\Lost-and-Found\\Intermediate\\Build\\Win64\\LostAndFoundEditor\\Development\\Engine\\SharedPCH.Engine.ShadowErrors.h"
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp"
+		]
+	}
+}
