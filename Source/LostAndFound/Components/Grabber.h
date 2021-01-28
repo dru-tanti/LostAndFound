@@ -3,26 +3,34 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Components/SceneComponent.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Grabber.generated.h"
 
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class LOSTANDFOUND_API UGrabber : public UActorComponent
+class LOSTANDFOUND_API UGrabber : public USceneComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
 	UGrabber();
-
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	void Interact();
+	void Release();
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+private:	
+	UPROPERTY(EditAnywhere) float Reach = 100.f;
+	UPROPERTY() UInputComponent* Input = nullptr;
+	void InitInput();
+	void InitPhysics();
 
-		
+	UPROPERTY() UPhysicsHandleComponent* PhysicsHandle;
+	FHitResult GetFirstPhysicsBody() const;
+	FVector GetPlayerWorldPosition() const;
+	FVector GetRaycastEnd() const;
 };

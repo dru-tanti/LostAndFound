@@ -12,8 +12,8 @@
 	"settings": {
 		"typescript.tsc.autoDetect": "off",
 		"C_Cpp.default.forcedInclude": [
-			"D:\\Projects\\Lost-and-Found\\Intermediate\\Build\\Win64\\UE4Editor\\Development\\LostAndFound\\Definitions.LostAndFound.h",
-			"D:\\Projects\\Lost-and-Found\\Intermediate\\Build\\Win64\\LostAndFoundEditor\\Development\\Engine\\SharedPCH.Engine.ShadowErrors.h"
+			"D:\\Projects\\LostAndFound\\Intermediate\\Build\\Win64\\UE4Editor\\Development\\LostAndFound\\Definitions.LostAndFound.h",
+			"D:\\Projects\\LostAndFound\\Intermediate\\Build\\Win64\\LostAndFoundEditor\\Development\\Engine\\SharedPCH.Engine.ShadowErrors.h"
 		]
 	},
 	"extensions": {
