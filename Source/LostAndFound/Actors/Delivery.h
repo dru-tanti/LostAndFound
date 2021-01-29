@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "LostAndFound/GameModes/GameManager.h"
 #include "GameFramework/Actor.h"
 #include "Delivery.generated.h"
 
@@ -16,7 +17,7 @@ class LOSTANDFOUND_API ADelivery : public AActor {
 public:	
 	// Sets default values for this actor's properties
 	ADelivery();
-	void DepositItem(AActor* DepositedItem);
+	bool DepositItem(AActor* DepositedItem);
 
 protected:
 	// Called when the game starts or when spawned

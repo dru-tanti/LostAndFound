@@ -14,6 +14,13 @@ enum Type {
 };
 
 UENUM(BlueprintType)
+enum Variant {
+	Large    	UMETA(DisplayName="Large"),
+	Medium     	UMETA(DisplayName="Medium"),
+	Small     	UMETA(DisplayName="Small"),
+};
+
+UENUM(BlueprintType)
 enum Colour {
 	Red     	UMETA(DisplayName="Red"),
 	Blue     UMETA(DisplayName="Blue"),

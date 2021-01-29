@@ -23,9 +23,10 @@ void ADelivery::BeginPlay() {
 	
 }
 
-void ADelivery::DepositItem(AActor* DepositedItem)  {
+bool ADelivery::DepositItem(AActor* DepositedItem)  {
 	UE_LOG(LogTemp, Warning, TEXT("%s Deposited in Delivery Box"), *DepositedItem->GetName());
 	DepositedItem->Destroy();
+	return true;
 }
 
 

@@ -42,10 +42,11 @@ void UGrabber::Interact() {
 	AActor* HitActor = Hit.GetActor();
 
 	if(PhysicsHandle->GrabbedComponent) { // If an object is being held.
-		if(HitActor->IsA(ADelivery::StaticClass())) { // If we still hit an actor, check if it's the delivery box.
+		if(HitActor && HitActor->IsA(ADelivery::StaticClass())) { // If we still hit an actor, check if it's the delivery box.
 			ADelivery* DeliveryBox = Cast<ADelivery>(HitActor);
-			DeliveryBox->DepositItem(PhysicsHandle->GrabbedComponent->GetOwner());
-			PhysicsHandle->ReleaseComponent();
+			if(DeliveryBox->DepositItem(PhysicsHandle->GrabbedComponent->GetOwner())) {
+				PhysicsHandle->ReleaseComponent();
+			}
 			return;
 		}
 		PhysicsHandle->GrabbedComponent->GetOwner()->SetActorEnableCollision(true);
@@ -57,10 +58,11 @@ void UGrabber::Interact() {
 			if(HitActor->IsA(AMagicBox::StaticClass())) {
 				AMagicBox* MagicBox = Cast<AMagicBox>(HitActor);
 				HitActor = Cast<AActor>(MagicBox->SpawnItem());
+				if(!HitActor) return;
 				GrabComponent = Cast<UPrimitiveComponent>(HitActor->GetRootComponent());
 			}
 
-			if (!HitActor || !GrabComponent) return;
+			if(!GrabComponent) return;
 			
 			// Grab the Hit Object.
 			PhysicsHandle->GrabComponentAtLocation(
