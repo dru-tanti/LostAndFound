@@ -27,6 +27,7 @@ enum Pattern {
 	Plain    UMETA(DisplayName="Plain"),
 };
 
+class UBoxComponent;
 class UParticleSystem;
 
 UCLASS()
@@ -39,13 +40,16 @@ public:
 	AItems();
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintImplementableEvent) void SetMaterial();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ItemDetails, meta = (AllowPrivateAccess = "true")) TEnumAsByte<Type> ItemType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ItemDetails, meta = (AllowPrivateAccess = "true")) TEnumAsByte<Colour> ItemColour;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ItemDetails, meta = (AllowPrivateAccess = "true")) TEnumAsByte<Pattern> ItemPattern;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) UBoxComponent* BoxComp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) UStaticMeshComponent* BaseMesh;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-private:	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) UStaticMeshComponent* ItemMesh;
 };

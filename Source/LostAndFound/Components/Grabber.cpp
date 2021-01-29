@@ -2,9 +2,11 @@
 
 
 #include "Grabber.h"
+#include "LostAndFound/Actors/MagicBox.h"
 #include "DrawDebugHelpers.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
+#include "Kismet/GameplayStatics.h"
 
 #define OUT
 
@@ -26,30 +28,46 @@ void UGrabber::BeginPlay() {
 // Called every frame
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	if(!PhysicsHandle) return;
+	if(!PhysicsHandle) return; // Null Check
+	// The code that makes the object actually move around.
 	if (PhysicsHandle->GrabbedComponent) {
 		PhysicsHandle->SetTargetLocation(this->GetComponentLocation());
 	}
 }
 
 void UGrabber::Interact() {
-	if(!PhysicsHandle) return;
-	if(PhysicsHandle->GrabbedComponent) {
+	if(!PhysicsHandle) return; // Null Check
+	if(PhysicsHandle->GrabbedComponent) { // If an object is being held.
 		UE_LOG(LogTemp, Warning, TEXT("Releasing"));
 		PhysicsHandle->GrabbedComponent->GetOwner()->SetActorEnableCollision(true);
 		PhysicsHandle->ReleaseComponent();
-	} else {
+	} else { // If no object is currently held.
 		UE_LOG(LogTemp, Warning, TEXT("Grabbing"));
+
+		// Fire Raycast and get hit details.
 		FHitResult Hit = GetFirstPhysicsBody();
 		AActor* HitActor = Hit.GetActor();
 		UPrimitiveComponent* GrabComponent = Hit.GetComponent();
+
 		if (HitActor && GrabComponent) {
 			UE_LOG(LogTemp, Warning, TEXT("Line Trace has Hit: %s"), *(HitActor->GetName()));
+			// If the HitActor is the Magic Box, spawn an item, and replace the details with the newly spawned item.
+			if(HitActor->IsA(AMagicBox::StaticClass())) {
+				UE_LOG(LogTemp, Warning, TEXT("Magiiiic"));
+				AMagicBox* MagicBox = Cast<AMagicBox>(HitActor);
+				HitActor = Cast<AActor>(MagicBox->SpawnItem());
+				GrabComponent = Cast<UPrimitiveComponent>(HitActor->GetRootComponent());
+			}
+			if (!HitActor || !GrabComponent) return;
+			
+			// Grab the Hit Object.
 			PhysicsHandle->GrabComponentAtLocation(
 				GrabComponent,
 				NAME_None,
 				HitActor->GetActorLocation()
 			);
+
+			// Disable collision to avoid and funny business.
 			PhysicsHandle->GrabbedComponent->GetOwner()->SetActorEnableCollision(false);
 		}
 	}
@@ -58,7 +76,7 @@ void UGrabber::Interact() {
 void UGrabber::InitInput() {
 	// Retrieving the Input component.
 	Input = GetOwner()->FindComponentByClass<UInputComponent>();
-	if (!Input) return;
+	if (!Input) return; // Null Check
 	Input->BindAction("Interact", IE_Pressed, this, &UGrabber::Interact);
 }
 
