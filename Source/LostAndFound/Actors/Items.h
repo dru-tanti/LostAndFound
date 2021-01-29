@@ -39,7 +39,6 @@ class LOSTANDFOUND_API AItems : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AItems();
-	virtual void Tick(float DeltaTime) override;
 	void SetMaterialColour();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ItemDetails, meta = (AllowPrivateAccess = "true")) TEnumAsByte<Type> ItemType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ItemDetails, meta = (AllowPrivateAccess = "true")) TEnumAsByte<Colour> ItemColour;

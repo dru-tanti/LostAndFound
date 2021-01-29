@@ -1,9 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Grabber.h"
 #include "LostAndFound/Actors/MagicBox.h"
-#include "DrawDebugHelpers.h"
+#include "LostAndFound/Actors/Delivery.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
@@ -37,27 +36,30 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 void UGrabber::Interact() {
 	if(!PhysicsHandle) return; // Null Check
+
+	// Fire Raycast and get hit details.
+	FHitResult Hit = GetFirstPhysicsBody();
+	AActor* HitActor = Hit.GetActor();
+
 	if(PhysicsHandle->GrabbedComponent) { // If an object is being held.
-		UE_LOG(LogTemp, Warning, TEXT("Releasing"));
+		if(HitActor->IsA(ADelivery::StaticClass())) { // If we still hit an actor, check if it's the delivery box.
+			ADelivery* DeliveryBox = Cast<ADelivery>(HitActor);
+			DeliveryBox->DepositItem(PhysicsHandle->GrabbedComponent->GetOwner());
+			PhysicsHandle->ReleaseComponent();
+			return;
+		}
 		PhysicsHandle->GrabbedComponent->GetOwner()->SetActorEnableCollision(true);
 		PhysicsHandle->ReleaseComponent();
 	} else { // If no object is currently held.
-		UE_LOG(LogTemp, Warning, TEXT("Grabbing"));
-
-		// Fire Raycast and get hit details.
-		FHitResult Hit = GetFirstPhysicsBody();
-		AActor* HitActor = Hit.GetActor();
 		UPrimitiveComponent* GrabComponent = Hit.GetComponent();
-
 		if (HitActor && GrabComponent) {
-			UE_LOG(LogTemp, Warning, TEXT("Line Trace has Hit: %s"), *(HitActor->GetName()));
 			// If the HitActor is the Magic Box, spawn an item, and replace the details with the newly spawned item.
 			if(HitActor->IsA(AMagicBox::StaticClass())) {
-				UE_LOG(LogTemp, Warning, TEXT("Magiiiic"));
 				AMagicBox* MagicBox = Cast<AMagicBox>(HitActor);
 				HitActor = Cast<AActor>(MagicBox->SpawnItem());
 				GrabComponent = Cast<UPrimitiveComponent>(HitActor->GetRootComponent());
 			}
+
 			if (!HitActor || !GrabComponent) return;
 			
 			// Grab the Hit Object.
@@ -95,17 +97,13 @@ FHitResult UGrabber::GetFirstPhysicsBody() const {
 	FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetOwner());
 	GetWorld()->LineTraceSingleByObjectType(
 		OUT Hit,
-		GetPlayerWorldPosition(),
+		GetOwner()->GetActorLocation(),
 		GetRaycastEnd(),
 		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
 		TraceParams
 	);
 
 	return Hit;
-}
-
-FVector UGrabber::GetPlayerWorldPosition() const {
-	return GetOwner()->GetActorLocation();
 }
 
 FVector UGrabber::GetRaycastEnd() const {

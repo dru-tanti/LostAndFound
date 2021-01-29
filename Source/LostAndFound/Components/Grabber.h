@@ -31,6 +31,5 @@ private:
 
 	UPROPERTY() UPhysicsHandleComponent* PhysicsHandle;
 	FHitResult GetFirstPhysicsBody() const;
-	FVector GetPlayerWorldPosition() const;
 	FVector GetRaycastEnd() const;
 };

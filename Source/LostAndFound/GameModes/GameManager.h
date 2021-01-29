@@ -7,25 +7,34 @@
 #include "GameManager.generated.h"
 
 class AMagicBox;
+
+USTRUCT(BlueprintType)
+struct FLevelSettings {
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxItems = 30;
+	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxGuarenteedRequests;
+	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxItemTypes;
+	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxVariants;
+};
+
 UCLASS()
 class LOSTANDFOUND_API AGameManager : public AGameModeBase
 {
 	GENERATED_BODY()
 
-
 private:
-	UPROPERTY(EditAnywhere, Category = "Spawn Parameters", meta = (AllowPrivateAccess = "true")) int8 MaxItems = 30;
-	UPROPERTY(EditAnywhere, Category = "Spawn Parameters", meta = (AllowPrivateAccess = "true")) int8 MaxItemTypes;
-	UPROPERTY(EditAnywhere, Category = "Spawn Parameters", meta = (AllowPrivateAccess = "true")) int8 MaxVariants;
+	UPROPERTY(EditAnywhere, Category = "Level Settings", meta = (AllowPrivateAccess = "true")) TArray<FLevelSettings> LevelSettings;
 
 public:
-	void ActorDied(AActor* DeadActor);
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game Loop") int32 StartDelay = 3;
-
+	int8 CurrentLevel = 0;
 	AMagicBox* MagicBoxRef;
 	virtual void BeginPlay() override;
 	void GameStart(); 
 	void GameOver(bool PlayerWon);
 };
+
+

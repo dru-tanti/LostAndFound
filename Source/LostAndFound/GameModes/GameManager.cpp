@@ -8,7 +8,7 @@
 
 void AGameManager::GameStart()  {
    MagicBoxRef = Cast<AMagicBox>(UGameplayStatics::GetActorOfClass(GetWorld(), AMagicBox::StaticClass()));
-   MagicBoxRef->GenerateList(MaxItems);
+   MagicBoxRef->GenerateList(30);
 }
 
 void AGameManager::GameOver(bool PlayerWon)  {
@@ -17,8 +17,4 @@ void AGameManager::GameOver(bool PlayerWon)  {
 
 void AGameManager::BeginPlay()  {
    Super::BeginPlay();
-}
-
-void AGameManager::ActorDied(AActor* DeadActor)  {
-   
 }

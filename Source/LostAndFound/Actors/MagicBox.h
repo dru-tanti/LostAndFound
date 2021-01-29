@@ -37,8 +37,6 @@ public:
 	// Sets default values for this actor's properties
 	AMagicBox();
 	AItems* SpawnItem();
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 	void GenerateList(int8 MaxItems);
 
 protected:
@@ -51,6 +49,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) USceneComponent* ItemSpawnPoint;
 	int8 RemainingItems;
 	FItemList* ItemToSpawn;
-	TArray<FItemList> ItemList;
-	UPROPERTY(EditAnywhere, meta=(TitleProperty = "ItemType")) TArray<FItemTemplate> Templates;
+	UPROPERTY(EditAnywhere, Category = "Generated Item List", meta=(TitleProperty = "ItemType")) TArray<FItemList> ItemList;
+	UPROPERTY(EditAnywhere, Category = "Templates", meta=(TitleProperty = "ItemType")) TArray<FItemTemplate> Templates;
 };
