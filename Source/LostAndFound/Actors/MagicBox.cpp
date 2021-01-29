@@ -3,6 +3,7 @@
 
 #include "MagicBox.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AMagicBox::AMagicBox()
@@ -23,7 +24,7 @@ AMagicBox::AMagicBox()
 // Called when the game starts or when spawned
 void AMagicBox::BeginPlay() {
 	Super::BeginPlay();
-	// GenerateList();
+	GenerateList(30);
 }
 
 // Called every frame
@@ -46,20 +47,23 @@ AItems* AMagicBox::SpawnItem() {
 	ItemToSpawn = new FItemList();
 
 	// NOTE: TESTING!
-	ItemToSpawn->EItemType = Shirt;
-	ItemToSpawn->EItemColour = Red;
+	ItemToSpawn->EItemType = Type(rand()%2);
+	ItemToSpawn->EItemColour = Colour(rand()%3);
 	ItemToSpawn->EItemPattern = Plain;
 	//--------------------------------------------
-	
 	UE_LOG(LogTemp, Warning, TEXT("Spawning Item"));
 	for(FItemTemplate Template : Templates) {
 		if(Template.ItemType == ItemToSpawn->EItemType) {
 			UE_LOG(LogTemp, Warning, TEXT("Item found!"));
 			FVector SpawnLocation = this->GetActorLocation();
 			FRotator SpawnRotation = this->GetActorRotation();
-			AItems* TempItem = GetWorld()->SpawnActor<AItems>(Template.TemplateItem, SpawnLocation, SpawnRotation);
-			TempItem->SetMaterial();
+			AItems* TempItem = GetWorld()->SpawnActorDeferred<AItems>(Template.TemplateItem, FTransform(SpawnLocation));
+			TempItem->ItemColour = ItemToSpawn->EItemColour;
+			TempItem->ItemPattern = ItemToSpawn->EItemPattern;
+			UGameplayStatics::FinishSpawningActor(TempItem, FTransform(SpawnLocation));
 			return TempItem;
+		} else {
+			continue;	
 		}
 	}
 	UE_LOG(LogTemp, Error, TEXT("No item found!!"));
