@@ -2,6 +2,7 @@
 
 
 #include "GameManager.h"
+#include "Request.h"
 #include "LostAndFound/Actors/MagicBox.h"
 #include "Kismet/GameplayStatics.h"
 #define OUT
@@ -23,8 +24,6 @@ void AGameManager::SetupLevel(int8 Level)  {
    LMaxItems = LevelSettings[Level].MaxItems;
    LMaxGuarenteedRequests = LevelSettings[Level].MaxGuarenteedRequests;
 }
-
-
 
 void AGameManager::UpdateScore(int32 AddedScore)  {
    Score += AddedScore;

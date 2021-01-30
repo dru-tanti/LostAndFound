@@ -3,6 +3,7 @@
 #include "Items.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "LostAndFound/Components/StorageSpace.h"
 #include "Materials/MaterialInstanceDynamic.h"
 
 // Sets default values

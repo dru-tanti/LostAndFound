@@ -37,6 +37,8 @@ enum Pattern {
 class UBoxComponent;
 class UParticleSystem;
 class UMaterialInstanceDynamic;
+class UPhysicsConstraintComponent;
+class UStorageSpace;
 
 UCLASS()
 class LOSTANDFOUND_API AItems : public AActor
@@ -46,15 +48,20 @@ class LOSTANDFOUND_API AItems : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AItems();
-	void SetMaterialColour();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ItemDetails, meta = (AllowPrivateAccess = "true")) TEnumAsByte<Type> ItemType;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ItemDetails, meta = (AllowPrivateAccess = "true")) TEnumAsByte<Colour> ItemColour;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ItemDetails, meta = (AllowPrivateAccess = "true")) TEnumAsByte<Pattern> ItemPattern;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) UBoxComponent* BoxComp;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) UStaticMeshComponent* BaseMesh;
+	void SetMaterialColour();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Details") TEnumAsByte<Type> ItemType;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Details") TEnumAsByte<Colour> ItemColour;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Details") TEnumAsByte<Pattern> ItemPattern;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components") UBoxComponent* BoxComp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components") UStaticMeshComponent* BaseMesh;
+
+	UPROPERTY(VisibleAnywhere, Category = "Storage") UStorageSpace* StorageSpace;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 };

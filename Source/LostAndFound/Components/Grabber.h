@@ -31,5 +31,7 @@ private:
 
 	UPROPERTY() UPhysicsHandleComponent* PhysicsHandle;
 	FHitResult GetFirstPhysicsBody() const;
+	FHitResult GetFirstDynamicBody() const;
+	FHitResult GetFirstStaticBody() const;
 	FVector GetRaycastEnd() const;
 };

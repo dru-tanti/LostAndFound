@@ -3,6 +3,7 @@
 #include "Grabber.h"
 #include "LostAndFound/Actors/MagicBox.h"
 #include "LostAndFound/Actors/Delivery.h"
+#include "LostAndFound/Actors/Storage.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
@@ -49,9 +50,26 @@ void UGrabber::Interact() {
 			}
 			return;
 		}
+
+		AActor* StaticHitActor = GetFirstStaticBody().GetActor();
+		if(!HitActor && StaticHitActor) {
+			if(StaticHitActor->IsA(AStorage::StaticClass())) { // If we still hit an actor, check if it's the delivery box.
+				AStorage* StorageBox = Cast<AStorage>(StaticHitActor);
+				if(StorageBox->CanStoreItem(PhysicsHandle->GrabbedComponent->GetOwner())) {
+					PhysicsHandle->ReleaseComponent();
+				}
+				return;
+			}
+		}
+
 		PhysicsHandle->GrabbedComponent->GetOwner()->SetActorEnableCollision(true);
 		PhysicsHandle->ReleaseComponent();
 	} else { // If no object is currently held.
+		AActor* DynamicHitActor = GetFirstDynamicBody().GetActor();
+		if(DynamicHitActor) {
+			UE_LOG(LogTemp, Error, TEXT("Static Actor Found: %s"), *DynamicHitActor->GetName());
+		}
+
 		UPrimitiveComponent* GrabComponent = Hit.GetComponent();
 		if (HitActor && GrabComponent) {
 			// If the HitActor is the Magic Box, spawn an item, and replace the details with the newly spawned item.
@@ -105,6 +123,38 @@ FHitResult UGrabber::GetFirstPhysicsBody() const {
 		TraceParams
 	);
 
+	return Hit;
+}
+
+FHitResult UGrabber::GetFirstDynamicBody() const {
+	FHitResult Hit;
+	FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetOwner());
+	GetWorld()->LineTraceSingleByObjectType(
+		OUT Hit,
+		GetOwner()->GetActorLocation(),
+		GetRaycastEnd(),
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldDynamic),
+		TraceParams
+	);
+	if(Hit.GetActor()) {
+		UE_LOG(LogTemp, Error, TEXT("Static Item Found: %s"), *Hit.GetActor()->GetName());
+	}
+	return Hit;
+}
+
+FHitResult UGrabber::GetFirstStaticBody() const {
+	FHitResult Hit;
+	FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetOwner());
+	GetWorld()->LineTraceSingleByObjectType(
+		OUT Hit,
+		GetOwner()->GetActorLocation(),
+		GetRaycastEnd(),
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic),
+		TraceParams
+	);
+	if(Hit.GetActor()) {
+		UE_LOG(LogTemp, Error, TEXT("Static Item Found: %s"), *Hit.GetActor()->GetName());
+	}
 	return Hit;
 }
 

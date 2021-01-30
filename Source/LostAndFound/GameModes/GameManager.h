@@ -7,6 +7,7 @@
 #include "GameManager.generated.h"
 
 class AMagicBox;
+class Request;
 
 USTRUCT(BlueprintType)
 struct FLevelSettings {
@@ -14,6 +15,7 @@ struct FLevelSettings {
 
 public:
 	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxItems = 30;
+	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxRequests = 5;
 	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxGuarenteedRequests;
 	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxItemTypes;
 	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxVariants;
@@ -35,6 +37,7 @@ private:
 public:
 	void UpdateScore(int32 AddedScore);
 	bool IsItemMaxNumberExceeded();
+	// TArray<Request> ActiveRequests;
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Level Settings") int8 CurrentLevel = 0;
