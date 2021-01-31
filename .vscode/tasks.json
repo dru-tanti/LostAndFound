@@ -657,7 +657,7 @@
 				"LostAndFoundEditor",
 				"Win64",
 				"Development",
-				"D:\\Projects\\Lost-and-Found\\LostAndFound.uproject",
+				"D:\\Projects\\LostAndFound\\LostAndFound.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",

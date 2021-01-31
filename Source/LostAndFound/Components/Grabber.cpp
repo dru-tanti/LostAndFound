@@ -45,7 +45,8 @@ void UGrabber::Interact() {
 	if(PhysicsHandle->GrabbedComponent) { // If an object is being held.
 		if(HitActor && HitActor->IsA(ADelivery::StaticClass())) { // If we still hit an actor, check if it's the delivery box.
 			ADelivery* DeliveryBox = Cast<ADelivery>(HitActor);
-			if(DeliveryBox->DepositItem(PhysicsHandle->GrabbedComponent->GetOwner())) {
+			if(DeliveryBox && DeliveryBox->DepositItem(PhysicsHandle->GrabbedComponent->GetOwner())) {
+				UE_LOG(LogTemp, Error, TEXT("Delivery Box Found %s"), *DeliveryBox->GetName())
 				PhysicsHandle->ReleaseComponent();
 			}
 			return;

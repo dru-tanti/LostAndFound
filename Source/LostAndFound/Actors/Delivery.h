@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "LostAndFound/GameModes/GameManager.h"
 #include "GameFramework/Actor.h"
 #include "Delivery.generated.h"
 
 class AItems;
+class AGameManager;
 class UBoxComponent;
 
 UCLASS()
@@ -15,7 +15,7 @@ class LOSTANDFOUND_API ADelivery : public AActor {
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
+	// Sets default values for this actor's propertiesEngine\Build\BatchFiles\Build.bat LostAndFoundEditor Win64 Development D:\Projects\Lost-and-Found\LostAndFound.uproject -waitmutex
 	ADelivery();
 	bool DepositItem(AActor* DepositedItem);
 
@@ -24,6 +24,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	AGameManager* GameManagerRef;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) UBoxComponent* BoxComp;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) UStaticMeshComponent* BaseMesh;
 };

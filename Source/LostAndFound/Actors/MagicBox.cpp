@@ -33,7 +33,7 @@ AItems* AMagicBox::SpawnItem() {
 	if(GameManagerRef->IsItemMaxNumberExceeded()) return nullptr;
 
 	// Setting the object type.
-	TEnumAsByte<Type> SpawnItemType = Type(rand()%2);
+	TEnumAsByte<Type> SpawnItemType = Type(rand()%3);
 
 	// Looking through the templates to find the matching bluepring.
 	for(FItemTemplate Template : Templates) {

@@ -8,9 +8,10 @@
 
 UENUM(BlueprintType)
 enum Type {
-	Shirt    UMETA(DisplayName="Shirt"),
-	Shoe     UMETA(DisplayName="Shoe"),
-	Jeans    UMETA(DisplayName="Jeans"),
+	Shirt    	UMETA(DisplayName="Shirt"),
+	Shoe     	UMETA(DisplayName="Shoe"),
+	Jeans   		UMETA(DisplayName="Jeans"),
+	AnyType		UMETA(DisplayName="Any"),
 };
 
 UENUM(BlueprintType)
@@ -18,20 +19,23 @@ enum Variant {
 	Large    	UMETA(DisplayName="Large"),
 	Medium     	UMETA(DisplayName="Medium"),
 	Small     	UMETA(DisplayName="Small"),
+	AnyVarient  UMETA(DisplayName="Any"),
 };
 
 UENUM(BlueprintType)
 enum Colour {
-	Red     	UMETA(DisplayName="Red"),
-	Blue     UMETA(DisplayName="Blue"),
-	Green    UMETA(DisplayName="Green"),
+	Red     		UMETA(DisplayName="Red"),
+	Blue     	UMETA(DisplayName="Blue"),
+	Green    	UMETA(DisplayName="Green"),
+	AnyColour	UMETA(DisplayName="Any"),
 };
 
 UENUM(BlueprintType)
 enum Pattern {
-	Spotted	UMETA(DisplayName="Spotted"),
-	Striped  UMETA(DisplayName="Striped"),
-	Plain    UMETA(DisplayName="Plain"),
+	Spotted		UMETA(DisplayName="Spotted"),
+	Striped  	UMETA(DisplayName="Striped"),
+	Plain    	UMETA(DisplayName="Plain"),
+	AnyPattern	UMETA(DisplayName="Any"),
 };
 
 class UBoxComponent;

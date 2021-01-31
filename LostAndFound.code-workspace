@@ -14,7 +14,23 @@
 		"C_Cpp.default.forcedInclude": [
 			"D:\\Projects\\LostAndFound\\Intermediate\\Build\\Win64\\UE4Editor\\Development\\LostAndFound\\Definitions.LostAndFound.h",
 			"D:\\Projects\\LostAndFound\\Intermediate\\Build\\Win64\\LostAndFoundEditor\\Development\\Engine\\SharedPCH.Engine.ShadowErrors.h"
-		]
+		],
+		"files.associations": {
+			"algorithm": "cpp",
+			"bitset": "cpp",
+			"chrono": "cpp",
+			"iterator": "cpp",
+			"xhash": "cpp",
+			"xtree": "cpp",
+			"xutility": "cpp",
+			"__bit_reference": "cpp",
+			"hash_map": "cpp",
+			"hash_set": "cpp",
+			"map": "cpp",
+			"set": "cpp",
+			"unordered_map": "cpp",
+			"unordered_set": "cpp"
+		}
 	},
 	"extensions": {
 		"recommendations": [
