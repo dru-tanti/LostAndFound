@@ -28,13 +28,13 @@ void AItems::SetMaterialColour()  {
 	FLinearColor MatColour;
 	switch(ItemColour) {
 		case Red: 
-			MatColour = {1.f, 0.f, 0.f};
+			MatColour = {0.75f, 0.f, 0.f};
 			break;
 		case Green: 
-			MatColour = {0.f, 1.f, 0.f};
+			MatColour = {0.f, 0.75f, 0.f};
 			break;
 		case Blue: 
-			MatColour = {0.f, 0.f, 1.f};
+			MatColour = {0.f, 0.f, 0.75f};
 			break;
 		default: 
 			MatColour = {1.f, 1.f, 1.f};
@@ -46,7 +46,7 @@ void AItems::SetMaterialColour()  {
 	} else {
 		UMaterialInstanceDynamic* Material = UMaterialInstanceDynamic::Create(BaseMesh->GetMaterial(0), this);
 		BaseMesh->SetMaterial(0, Material);
-		Material->SetVectorParameterValue(FName(TEXT("DiffuseColor")), MatColour);
+		Material->SetVectorParameterValue(FName(TEXT("Tint")), MatColour);
 	}
 
 }

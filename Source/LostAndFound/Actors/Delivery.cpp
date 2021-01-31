@@ -25,10 +25,6 @@ void ADelivery::BeginPlay() {
 }
 
 bool ADelivery::DepositItem(AActor* DepositedItem) {
-	if(GameManagerRef) {
-		UE_LOG(LogTemp, Warning, TEXT("Getting Game Manager %s"), *GameManagerRef->GetName());
-	}
-
 	if(!DepositedItem || !GameManagerRef) return false;
 
 	if(GameManagerRef->CheckDelivery(Cast<AItems>(DepositedItem))) {

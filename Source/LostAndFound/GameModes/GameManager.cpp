@@ -51,6 +51,7 @@ bool AGameManager::CheckDelivery(AItems* DepositedItem) {
    for (size_t i = 0; i < ActiveRequests.Num(); i++) {
       if(!ActiveRequests[i]) continue; // NULL Check.
       if(ActiveRequests[i]->IsRequestCorrect(DepositedItem->ItemType, DepositedItem->ItemColour)) {
+         CurrentScore += ActiveRequests[i]->Score;
          // Remove the reference for the request.
          ActiveRequests.RemoveAt(i);
          ++LCompletedRequests;
