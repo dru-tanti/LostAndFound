@@ -22,7 +22,10 @@ void AGameManager::SetupLevel(int8 Level)  {
    CurrentLevel = Level;
    LMaxItems = LevelSettings[Level].MaxItems;
    LMaxRequests = LevelSettings[Level].MaxRequests;
-   GenerateRequest();
+   for (size_t i = 0; i < LMaxRequests; i++) {
+      GenerateRequest(); 
+   }
+   
 }
 
 void AGameManager::UpdateScore(int32 AddedScore)  {
