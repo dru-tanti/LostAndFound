@@ -17,6 +17,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxGuarenteedRequests;
 	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxItemTypes;
 	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxVariants;
+	UPROPERTY(EditAnywhere, Category = "Level Settings") int8 MaxScore;
 	UPROPERTY(EditAnywhere, Category = "Level Settings") bool Paint = false;
 	UPROPERTY(EditAnywhere, Category = "Level Settings") bool Scissors = false;
 	UPROPERTY(EditAnywhere, Category = "Level Settings") bool Printer = false;
@@ -39,6 +40,7 @@ private:
 	// Current Level Settings.
 	UPROPERTY(VisibleAnywhere, Category = "Level Settings") int8 LMaxItems = 0;
 	UPROPERTY(VisibleAnywhere, Category = "Level Settings") int8 LMaxRequests = 0;
+	UPROPERTY(VisibleAnywhere, Category = "Level Settings") int8 LMaxScore = 0;
 	UPROPERTY(VisibleAnywhere, Category = "Level Settings") int8 LMaxActiveRequests = 0;
 	UPROPERTY(VisibleAnywhere, Category = "Level Settings") int8 LCompletedRequests = 0;
 
